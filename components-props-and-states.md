@@ -48,89 +48,95 @@ function User({ user }) {
 
 ---
 
-## Opgave 1: Vis alle props fra user-objektet
+## Opgave 1: Props – Vis alle data fra user-objektet
 
-**Step 1.0:** Udforsk props og destructuring
+**Formål:**
+Du lærer at sende data til en komponent med props, og hvordan du kan modtage og bruge dem på forskellige måder.
 
-Før du går videre, skal du teste de tre måder at modtage data i User-komponenten:
+### Step 1.0: Udforsk props og destructuring
 
-1. Modtag props enkeltvis med destructuring:
+**1. Prøv tre måder at modtage data i User-komponenten:**
 
-   ```jsx
-   function User({ name, mail, title, image, id }) {
-     // Nu kan du bruge name, mail osv. direkte
-     console.log("Enkeltvis props:", name, mail, title, image, id);
-     // ...
-   }
-   // I App.jsx:
-   <User name={user.name} mail={user.mail} title={user.title} image={user.image} id={user.id} />;
-   ```
+- **Enkeltvis props med destructuring:**
+  Du modtager hver værdi som en variabel direkte i funktionshovedet.
 
-2. Modtag props som ét objekt:
+  ```jsx
+  function User({ name, mail, title, image, id }) {
+    // Nu kan du bruge name, mail osv. direkte
+    console.log("Enkeltvis props:", name, mail, title, image, id);
+  }
+  // I App.jsx:
+  <User name={user.name} mail={user.mail} title={user.title} image={user.image} id={user.id} />;
+  ```
 
-   ```jsx
-   function User(props) {
-     console.log("Props-objekt:", props);
-     // ...
-   }
-   // I App.jsx:
-   <User name={user.name} mail={user.mail} title={user.title} image={user.image} id={user.id} />;
-   ```
+- **Props som ét objekt:**
+  Du modtager alle props samlet i et objekt, og skal bruge fx props.name.
 
-3. Modtag hele user-objektet som én prop og brug destructuring:
-   ```jsx
-   function User({ user }) {
-     const { id, image, mail, name, title } = user;
-     console.log("User-objekt:", user);
-     // ...
-   }
-   // I App.jsx:
-   <User user={user} />;
-   ```
+  ```jsx
+  function User(props) {
+    console.log("Props-objekt:", props);
+  }
+  // I App.jsx:
+  <User name={user.name} mail={user.mail} title={user.title} image={user.image} id={user.id} />;
+  ```
 
-Prøv alle tre versioner, se output i konsollen og skriv en kommentar om forskellen.
+- **Hele user-objektet som én prop:**
+  Du sender hele user-objektet som én prop og pakker det ud med destructuring.
+  ```jsx
+  function User({ user }) {
+    const { id, image, mail, name, title } = user;
+    console.log("User-objekt:", user);
+  }
+  // I App.jsx:
+  <User user={user} />;
+  ```
+
+**2. Skriv en kommentar om forskellen på de tre metoder.**
+Hvilken metode synes du er mest overskuelig? Hvorfor?
 
 ---
 
-**Step 1.1:** Udvid `User`-komponenten, så den viser ALLE props fra user-objektet
+### Step 1.1: Vis alle props fra user-objektet
 
-- id
-- image
-- mail
-- name
-- title
+- Udvid `User`-komponenten, så den viser alle felter: id, image, mail, name, title.
+- Skriv koden, så du kan se alle værdier på skærmen.
 
-**Step 1.2:** Sørg for at alle felter vises tydeligt og med passende styling
+---
 
-- Brug fx et billede-tag til `image`, og vis de andre felter som tekst.
+### Step 1.2: Styling
 
-**Step 1.3:** Lav en validering i `User`, så hvis en prop mangler, vises en default-værdi
+- Brug et `<img>`-tag til at vise billedet (`image`).
+- Vis de andre felter som tekst.
+- Gør det pænt og overskueligt – brug evt. CSS-klasser.
 
-- Fx: Hvis `image` mangler, vis et placeholder-billede.
+---
 
-**Step 1.4:** Forklar med kommentarer i koden, hvad `{}` gør i funktionshovedet
+### Step 1.4: Kommentarer
 
-- Skriv en kort kommentar over funktionshovedet.
+- Skriv en kort kommentar over funktionshovedet, der forklarer hvad destructuring `{}` gør.
 
-**Step 1.5:** Ændr `User`-komponenten, så den modtager ét `user`-objekt som prop:
+---
 
-```jsx
-<User user={user} />
-```
+### Step 1.5: Modtag hele user-objektet som prop
 
-Brug destructuring i komponenten:
-
-```jsx
-function User({ user }) {
-  const { id, image, mail, name, title } = user;
-  // ...
-}
-```
-
-**Ekstra hjælp:**
-
-- Start med at vise props enkeltvis, og refaktorér derefter til at bruge et user-objekt.
-- Brug `console.log(props)` eller `console.log(user)` for at se data i konsollen.
+- Refaktorér din komponent, så du modtager hele user-objektet som én prop.
+- Du kan nu bruge destructuring til at pakke værdierne ud:
+  ```jsx
+  function User({ user }) {
+    const { id, image, mail, name, title } = user;
+    // ...
+  }
+  ```
+- Alternativt kan du bruge dot-notation direkte:
+  ```jsx
+  function User({ user }) {
+    // ...
+    <p>{user.name}</p>
+    <p>{user.mail}</p>
+    // ...
+  }
+  ```
+- Vælg den metode du synes er mest overskuelig - test gerne begge metoder!
 
 ---
 
