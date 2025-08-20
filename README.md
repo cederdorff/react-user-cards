@@ -1,12 +1,75 @@
-# React + Vite
+# React User Cards
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React application that displays user information using reusable components. This project demonstrates the use of props and state in React, and is built with Vite for fast development and hot module replacement.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Displays user cards with customizable information
+- Demonstrates React props and state management
+- Component-based architecture
+- Modern styling with CSS
+- Fast development with Vite
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- Node.js (v16 or higher recommended)
+- npm
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/cederdorff/react-user-cards.git
+   cd react-user-cards
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Running the App
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser to view the app.
+
+## Project Structure
+
+```
+react-user-cards/
+├── public/
+│   └── vite.svg
+├── src/
+│   ├── App.jsx
+│   ├── index.css
+│   ├── main.jsx
+│   ├── assets/
+│   │   └── react.svg
+│   └── components/
+│       └── User.jsx
+├── index.html
+├── package.json
+├── vite.config.js
+├── eslint.config.js
+└── README.md
+```
+
+## Usage
+
+- Modify `src/components/User.jsx` to customize the user card component.
+- Add or update user data in `src/App.jsx`.
+- Style the app using `src/index.css`.
+
+## Contributing
+
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+This project is licensed under the MIT License.
