@@ -9,12 +9,7 @@ function App() {
       const response = await fetch("https://raw.githubusercontent.com/cederdorff/race/master/data/users.json");
       const data = await response.json();
 
-      const usersArray = Object.keys(data).map(key => ({
-        id: key,
-        ...data[key]
-      }));
-
-      setUsers(usersArray);
+      setUsers(data);
     }
     fetchUsers();
   }, []);
