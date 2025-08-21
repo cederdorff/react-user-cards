@@ -134,8 +134,10 @@ form img {
 }
 
 .btns {
-  display: flex;
-  gap: 0.5em;
+  margin: 1em 0 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
 }
 
 /* ---------- Form Styling ---------- */
