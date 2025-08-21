@@ -194,7 +194,7 @@ Du lærer at gøre din komponent interaktiv med Reacts state. State bruges til a
   ```jsx
   <button onClick={() => setShowDetails(!showDetails)}>{showDetails ? "Skjul" : "Vis"} detaljer</button>
   ```
-- Brug `showDetails` til at styre om detaljerne vises:
+- Brug `showDetails` til at styre om detaljerne vises (indsæt hvor det giver mening i User-komponent):
   ```jsx
   {
     showDetails && <div>Vis brugerdetaljer her</div>
