@@ -142,58 +142,76 @@ Hvilken metode synes du er mest overskuelig? Hvorfor?
 
 ## Opgave 2: State – Dynamiske data og interaktivitet
 
-**Teori:**
-State er Reacts måde at holde styr på data, der kan ændre sig over tid – fx inputfelter, klik på knapper eller data hentet fra en server. State oprettes med useState-hooket, og når du opdaterer state, genrender React din komponent med de nye data.
+**Formål:**
+Du lærer at gøre din komponent interaktiv med Reacts state. State bruges til at gemme og opdatere data, som fx antal likes eller om detaljer skal vises/skjules.
 
-Eksempel:
+---
 
-```jsx
-const [likes, setLikes] = useState(0);
-```
+### Step 2.1: Like-knap med state
 
-**Step 2.1:** Tilføj en “like”-knap til hver bruger, der tæller antal likes med `useState` i `User`-komponenten.  
-_Hjælp: Opret en state-variabel i User:_
+- Opret en state-variabel i `User`-komponenten:
+  ```jsx
+  const [likes, setLikes] = useState(0);
+  ```
+- Pak dine knapper ind i en `<div className="btns">` for pænere layout (der ligger CSS på `.btns`):
+  ```jsx
+  <div className="btns">
+    <button onClick={() => setLikes(likes + 1)}>Like</button>
+    <button onClick={() => setLikes(0)}>Reset likes</button>
+  </div>
+  ```
+- Tip: Sæt et tal på knappen, fx `Like ({likes})`, så du kan se det ændre sig.
 
-```jsx
-const [likes, setLikes] = useState(0);
-```
+---
 
-_Lav en knap:_
+### Step 2.2: Vis likes på kortet
 
-```jsx
-<button onClick={() => setLikes(likes + 1)}>Like</button>
-```
+- Vis antal likes med fx:
+  ```jsx
+  <p>Likes: {likes}</p>
+  ```
+- Test at tallet ændrer sig, når du klikker på knappen.
 
-**Step 2.2:** Vis antal likes på kortet og opdater det, når man klikker på knappen.  
-_Hjælp: Vis likes med fx `<p>Likes: {likes}</p>`_
+---
 
-**Step 2.3:** Tilføj en “reset likes”-knap, der nulstiller likes for en bruger.  
-_Hjælp:_
+### Step 2.3: Reset likes-knap
 
-```jsx
-<button onClick={() => setLikes(0)}>Reset likes</button>
-```
+- Tilføj en knap, der nulstiller likes:
+  ```jsx
+  <button onClick={() => setLikes(0)}>Reset likes</button>
+  ```
+- Test at likes bliver nulstillet, når du klikker på knappen.
 
-**Step 2.4:** Gør det muligt at skjule/vis brugerens detaljer med en toggle-knap (brug state).  
-_Hjælp: Opret en state-variabel:_
+---
 
-```jsx
-const [showDetails, setShowDetails] = useState(true);
-```
+### Step 2.4: Skjul/vis detaljer med state
 
-_Lav en knap:_
+- Opret en state-variabel til at styre om detaljer vises:
+  ```jsx
+  const [showDetails, setShowDetails] = useState(true);
+  ```
+- Lav en knap, der toggler visning:
+  ```jsx
+  <button onClick={() => setShowDetails(!showDetails)}>{showDetails ? "Skjul" : "Vis"} detaljer</button>
+  ```
+- Brug `showDetails` til at styre om detaljerne vises:
+  ```jsx
+  {
+    showDetails && <div>{/* Her vises brugerens detaljer, fx navn, mail, billede osv. */}</div>;
+  }
+  ```
+- Tip: Start med at vise alle detaljer, og test at du kan skjule og vise dem med knappen.
 
-```jsx
-<button onClick={() => setShowDetails(!showDetails)}>{showDetails ? "Skjul" : "Vis"} detaljer</button>
-```
+---
 
-_Brug showDetails til at styre om detaljerne vises:_
+**Ekstra hjælp:**
 
-```jsx
-{
-  showDetails && <div>{/* detaljer her */}</div>;
-}
-```
+- Husk at importere `useState` fra React:
+  ```jsx
+  import { useState } from "react";
+  ```
+- Hvis du sidder fast, så skriv din kode trin for trin og test hver del for sig.
+- Spørg evt. din sidemand eller underviser, hvis du er i tvivl om state!
 
 ---
 
