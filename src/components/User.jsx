@@ -1,9 +1,9 @@
-export default function User({ name, mail, image }) {
+export default function User({ user }) {
   return (
     <div className="user-card">
-      <img src={image} />
-      <h2>{name}</h2>
-      <p>Mail: {mail}</p>
+      <img src={user.image} />
+      <h2>{user.name}</h2>
+      <p>Mail: {user.mail}</p>
     </div>
   );
 }
