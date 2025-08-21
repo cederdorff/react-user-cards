@@ -197,7 +197,7 @@ Du lærer at gøre din komponent interaktiv med Reacts state. State bruges til a
 - Brug `showDetails` til at styre om detaljerne vises:
   ```jsx
   {
-    showDetails && <div>Vis brugerdetaljer her</div>;
+    showDetails && <div>Vis brugerdetaljer her</div>
   }
   ```
 - Tip: Start med at vise alle detaljer, og test at du kan skjule og vise dem med knappen.
