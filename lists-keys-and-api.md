@@ -12,31 +12,39 @@ Keys er et vigtigt koncept i React når du renderer lister. Keys hjælper React 
 ### Step 6.1: Eksperimenter med keys
 
 1. **Test uden keys:**
+
    - Fjern midlertidigt `key={user.id}` fra din UserList komponent
    - Åbn Developer Tools i browseren og kig efter warnings
    - Hvad sker der i konsollen?
 
 2. **Test med dårlige keys:**
+
    ```jsx
    // ❌ Dårligt eksempel - brug ikke array index som key
-   {users.map((user, index) => (
-     <UserCard user={user} key={index} onDelete={handleDeleteUser} />
-   ))}
+   {
+     users.map((user, index) => (
+       <UserCard user={user} key={index} onDelete={handleDeleteUser} />
+     ));
+   }
    ```
+
    - Prøv at slette den første bruger og se hvad der sker
    - Hvad er problemet med at bruge index som key?
 
 3. **Korrekt brug af keys:**
    ```jsx
    // ✅ Godt eksempel - brug unik id som key
-   {users.map(user => (
-     <UserCard user={user} key={user.id} onDelete={handleDeleteUser} />
-   ))}
+   {
+     users.map(user => (
+       <UserCard user={user} key={user.id} onDelete={handleDeleteUser} />
+     ));
+   }
    ```
 
 ### Step 6.2: Skriv en kommentar om keys
 
 Tilføj en kommentar i din UserList komponent der forklarer:
+
 - Hvad keys er
 - Hvorfor de er vigtige
 - Hvad der gør en god key
@@ -51,8 +59,9 @@ I praksis henter man ofte data fra forskellige API'er. Du lærer at arbejde med 
 ### Step 7.1: Hent posts fra JSONPlaceholder
 
 1. **Opret en ny komponent `PostList.jsx`:**
+
    ```jsx
-   import { useState, useEffect } from 'react';
+   import { useState, useEffect } from "react";
 
    function PostList() {
      const [posts, setPosts] = useState([]);
@@ -63,7 +72,9 @@ I praksis henter man ofte data fra forskellige API'er. Du lærer at arbejde med 
        async function fetchPosts() {
          try {
            setLoading(true);
-           const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+           const response = await fetch(
+             "https://jsonplaceholder.typicode.com/posts"
+           );
            if (!response.ok) {
              throw new Error(`HTTP error! status: ${response.status}`);
            }
@@ -75,7 +86,7 @@ I praksis henter man ofte data fra forskellige API'er. Du lærer at arbejde med 
            setLoading(false);
          }
        }
-       
+
        fetchPosts();
      }, []);
 
@@ -107,6 +118,7 @@ I praksis henter man ofte data fra forskellige API'er. Du lærer at arbejde med 
 ### Step 7.2: Sammenlign datastrukturer
 
 1. **Undersøg data:**
+
    - Åbn `https://jsonplaceholder.typicode.com/posts` i browseren
    - Sammenlign med `https://raw.githubusercontent.com/cederdorff/race/master/data/users.json`
    - Hvad er forskellene i datastruktur?
@@ -125,8 +137,9 @@ Når du henter data fra API'er skal du håndtere forskellige tilstande: loading,
 ### Step 8.1: Simpel loading state
 
 1. **Opdater PostList med bedre loading og error handling:**
+
    ```jsx
-   import { useState, useEffect } from 'react';
+   import { useState, useEffect } from "react";
 
    function PostList() {
      const [posts, setPosts] = useState([]);
@@ -138,12 +151,14 @@ Når du henter data fra API'er skal du håndtere forskellige tilstande: loading,
          try {
            setLoading(true);
            setError(null); // Reset fejl ved nyt forsøg
-           
-           const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+
+           const response = await fetch(
+             "https://jsonplaceholder.typicode.com/posts"
+           );
            if (!response.ok) {
              throw new Error(`Fejl ${response.status}: Kunne ikke hente data`);
            }
-           
+
            const data = await response.json();
            setPosts(data.slice(0, 10)); // Vis kun første 10 posts
          } catch (err) {
@@ -152,7 +167,7 @@ Når du henter data fra API'er skal du håndtere forskellige tilstande: loading,
            setLoading(false);
          }
        }
-       
+
        fetchPosts();
      }, []);
 
@@ -171,7 +186,7 @@ Når du henter data fra API'er skal du håndtere forskellige tilstande: loading,
        return (
          <div className="posts-section">
            <h2>Latest Posts</h2>
-           <p style={{ color: 'red' }}>❌ Fejl: {error}</p>
+           <p style={{ color: "red" }}>❌ Fejl: {error}</p>
            <button onClick={() => window.location.reload()}>
              🔄 Prøv igen
            </button>
@@ -187,8 +202,12 @@ Når du henter data fra API'er skal du håndtere forskellige tilstande: loading,
          <ul className="posts-list">
            {posts.map(post => (
              <li key={post.id} className="post-item">
-               <h3>Post #{post.id}: {post.title}</h3>
-               <p><strong>User ID:</strong> {post.userId}</p>
+               <h3>
+                 Post #{post.id}: {post.title}
+               </h3>
+               <p>
+                 <strong>User ID:</strong> {post.userId}
+               </p>
                <p>{post.body.substring(0, 100)}...</p>
              </li>
            ))}
@@ -203,6 +222,7 @@ Når du henter data fra API'er skal du håndtere forskellige tilstande: loading,
 ### Step 8.2: Test fejl handling
 
 1. **Test hvad der sker ved netværksfejl:**
+
    - Slå din internetforbindelse fra
    - Genindlæs siden og se fejlbeskeden
    - Tænd internettet igen og klik "Prøv igen"
@@ -215,6 +235,7 @@ Når du henter data fra API'er skal du håndtere forskellige tilstande: loading,
 ### Step 8.3: Tilføj en manuel refresh knap
 
 1. **Tilføj en refresh funktion:**
+
    ```jsx
    function PostList() {
      const [posts, setPosts] = useState([]);
@@ -225,12 +246,14 @@ Når du henter data fra API'er skal du håndtere forskellige tilstande: loading,
        try {
          setLoading(true);
          setError(null);
-         
-         const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+
+         const response = await fetch(
+           "https://jsonplaceholder.typicode.com/posts"
+         );
          if (!response.ok) {
            throw new Error(`Fejl ${response.status}: Kunne ikke hente data`);
          }
-         
+
          const data = await response.json();
          setPosts(data.slice(0, 10));
        } catch (err) {
@@ -247,38 +270,39 @@ Når du henter data fra API'er skal du håndtere forskellige tilstande: loading,
      return (
        <div className="posts-section">
          <h2>Latest Posts</h2>
-         
+
          {/* Refresh knap der altid er synlig */}
-         <button 
-           onClick={fetchPosts} 
+         <button
+           onClick={fetchPosts}
            disabled={loading}
-           style={{ 
-             marginBottom: '20px',
-             padding: '10px 15px',
-             backgroundColor: loading ? '#ccc' : '#007bff',
-             color: 'white',
-             border: 'none',
-             borderRadius: '5px',
-             cursor: loading ? 'not-allowed' : 'pointer'
-           }}
-         >
-           {loading ? '⏳ Henter...' : '🔄 Refresh Posts'}
+           style={{
+             marginBottom: "20px",
+             padding: "10px 15px",
+             backgroundColor: loading ? "#ccc" : "#007bff",
+             color: "white",
+             border: "none",
+             borderRadius: "5px",
+             cursor: loading ? "not-allowed" : "pointer"
+           }}>
+           {loading ? "⏳ Henter..." : "🔄 Refresh Posts"}
          </button>
 
          {loading && <p>⏳ Henter posts...</p>}
-         
-         {error && (
-           <p style={{ color: 'red' }}>❌ Fejl: {error}</p>
-         )}
-         
+
+         {error && <p style={{ color: "red" }}>❌ Fejl: {error}</p>}
+
          {!loading && !error && posts.length > 0 && (
            <>
              <p className="api-info">✅ {posts.length} posts hentet!</p>
              <ul className="posts-list">
                {posts.map(post => (
                  <li key={post.id} className="post-item">
-                   <h3>Post #{post.id}: {post.title}</h3>
-                   <p><strong>User ID:</strong> {post.userId}</p>
+                   <h3>
+                     Post #{post.id}: {post.title}
+                   </h3>
+                   <p>
+                     <strong>User ID:</strong> {post.userId}
+                   </p>
                    <p>{post.body.substring(0, 100)}...</p>
                  </li>
                ))}
@@ -307,6 +331,7 @@ JSONPlaceholder er et "fake" API der simulerer server kommunikation. Det er perf
 ### Step 9.1: Udforsk JSONPlaceholder API
 
 1. **Test API'et i browseren:**
+
    - Åbn `https://jsonplaceholder.typicode.com/posts/1` i browseren
    - Åbn `https://jsonplaceholder.typicode.com/users` i browseren
    - Læs dokumentationen på `https://jsonplaceholder.typicode.com/`
@@ -319,11 +344,12 @@ JSONPlaceholder er et "fake" API der simulerer server kommunikation. Det er perf
 ### Step 9.2: Log API responses
 
 1. **Tilføj console.log til din handleSubmit:**
+
    ```jsx
    async function handleSubmit(e) {
      e.preventDefault();
      const form = e.target;
-     
+
      const newUser = {
        name: form.name.value,
        mail: form.mail.value,
@@ -331,22 +357,25 @@ JSONPlaceholder er et "fake" API der simulerer server kommunikation. Det er perf
        image: form.image.value
      };
 
-     console.log('Sender til server:', newUser);
+     console.log("Sender til server:", newUser);
 
      try {
        // Simuler POST til server
-       const response = await fetch('https://jsonplaceholder.typicode.com/users', {
-         method: 'POST',
-         headers: {
-           'Content-Type': 'application/json',
-         },
-         body: JSON.stringify(newUser),
-       });
+       const response = await fetch(
+         "https://jsonplaceholder.typicode.com/users",
+         {
+           method: "POST",
+           headers: {
+             "Content-Type": "application/json"
+           },
+           body: JSON.stringify(newUser)
+         }
+       );
 
-       console.log('Response status:', response.status);
-       
+       console.log("Response status:", response.status);
+
        const serverResponse = await response.json();
-       console.log('Server svarede:', serverResponse);
+       console.log("Server svarede:", serverResponse);
 
        // Tilføj til lokal liste (med vores eget ID)
        const userWithId = {
@@ -356,11 +385,11 @@ JSONPlaceholder er et "fake" API der simulerer server kommunikation. Det er perf
 
        setUsers([...users, userWithId]);
        form.reset();
-       
-       alert('✅ Bruger tilføjet!');
+
+       alert("✅ Bruger tilføjet!");
      } catch (error) {
-       console.error('❌ Fejl:', error);
-       alert('Kunne ikke tilføje bruger: ' + error.message);
+       console.error("❌ Fejl:", error);
+       alert("Kunne ikke tilføje bruger: " + error.message);
      }
    }
    ```
@@ -373,24 +402,27 @@ JSONPlaceholder er et "fake" API der simulerer server kommunikation. Det er perf
 ### Step 9.3: Simuler DELETE request
 
 1. **Tilføj logging til handleDeleteUser:**
+
    ```jsx
    async function handleDeleteUser(id) {
-     console.log('Sletter bruger med ID:', id);
+     console.log("Sletter bruger med ID:", id);
 
      try {
-       const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
-         method: 'DELETE',
-       });
+       const response = await fetch(
+         `https://jsonplaceholder.typicode.com/users/${id}`,
+         {
+           method: "DELETE"
+         }
+       );
 
-       console.log('Delete response status:', response.status);
+       console.log("Delete response status:", response.status);
 
        // Fjern fra lokal liste
        setUsers(users.filter(user => user.id !== id));
-       console.log('✅ Bruger slettet lokalt');
-       
+       console.log("✅ Bruger slettet lokalt");
      } catch (error) {
-       console.error('❌ Fejl ved sletning:', error);
-       alert('Kunne ikke slette bruger: ' + error.message);
+       console.error("❌ Fejl ved sletning:", error);
+       alert("Kunne ikke slette bruger: " + error.message);
      }
    }
    ```
@@ -398,6 +430,7 @@ JSONPlaceholder er et "fake" API der simulerer server kommunikation. Det er perf
 ### Step 9.4: Refleksion
 
 **Spørgsmål til diskussion:**
+
 1. Hvorfor returnerer JSONPlaceholder altid status 201 for POST requests?
 2. Hvad er forskellen mellem at gemme data lokalt vs. på en server?
 3. Hvorfor skal vi bruge `crypto.randomUUID()` i stedet for at stole på server ID?
@@ -414,8 +447,9 @@ Mange applikationer henter data fra flere API kilder og kombinerer dem. Du lære
 ### Step 10.1: Hent data fra to kilder
 
 1. **Opret en ny komponent `SimpleUserPosts.jsx`:**
+
    ```jsx
-   import { useState, useEffect } from 'react';
+   import { useState, useEffect } from "react";
 
    function SimpleUserPosts() {
      const [users, setUsers] = useState([]);
@@ -424,26 +458,30 @@ Mange applikationer henter data fra flere API kilder og kombinerer dem. Du lære
 
      useEffect(() => {
        async function fetchData() {
-         console.log('🔄 Starter datahentning...');
-         
+         console.log("🔄 Starter datahentning...");
+
          try {
            // Hent users først
-           console.log('📥 Henter users...');
-           const usersResponse = await fetch('https://jsonplaceholder.typicode.com/users');
+           console.log("📥 Henter users...");
+           const usersResponse = await fetch(
+             "https://jsonplaceholder.typicode.com/users"
+           );
            const usersData = await usersResponse.json();
-           console.log('✅ Users hentet:', usersData.length);
+           console.log("✅ Users hentet:", usersData.length);
            setUsers(usersData.slice(0, 5)); // Kun første 5 users
 
            // Hent posts derefter
-           console.log('📥 Henter posts...');
-           const postsResponse = await fetch('https://jsonplaceholder.typicode.com/posts');
+           console.log("📥 Henter posts...");
+           const postsResponse = await fetch(
+             "https://jsonplaceholder.typicode.com/posts"
+           );
            const postsData = await postsResponse.json();
-           console.log('✅ Posts hentet:', postsData.length);
+           console.log("✅ Posts hentet:", postsData.length);
            setPosts(postsData);
 
-           console.log('🎉 Al data hentet!');
+           console.log("🎉 Al data hentet!");
          } catch (error) {
-           console.error('❌ Fejl ved datahentning:', error);
+           console.error("❌ Fejl ved datahentning:", error);
          } finally {
            setLoading(false);
          }
@@ -457,25 +495,45 @@ Mange applikationer henter data fra flere API kilder og kombinerer dem. Du lære
      }
 
      return (
-       <div style={{ border: '2px solid #007bff', padding: '20px', margin: '20px 0' }}>
+       <div
+         style={{
+           border: "2px solid #007bff",
+           padding: "20px",
+           margin: "20px 0"
+         }}>
          <h2>Users og deres Posts</h2>
-         <p>📊 Data: {users.length} users og {posts.length} posts</p>
-         
+         <p>
+           📊 Data: {users.length} users og {posts.length} posts
+         </p>
+
          {users.map(user => (
-           <div key={user.id} style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0' }}>
-             <h3>{user.name} (User #{user.id})</h3>
+           <div
+             key={user.id}
+             style={{
+               border: "1px solid #ccc",
+               padding: "10px",
+               margin: "10px 0"
+             }}>
+             <h3>
+               {user.name} (User #{user.id})
+             </h3>
              <p>📧 {user.email}</p>
-             
+
              <h4>Posts af denne bruger:</h4>
              {posts
                .filter(post => post.userId === user.id)
                .slice(0, 2)
                .map(post => (
-                 <div key={post.id} style={{ backgroundColor: '#f8f9fa', padding: '8px', margin: '5px 0' }}>
+                 <div
+                   key={post.id}
+                   style={{
+                     backgroundColor: "#f8f9fa",
+                     padding: "8px",
+                     margin: "5px 0"
+                   }}>
                    <strong>Post #{post.id}:</strong> {post.title}
                  </div>
-               ))
-             }
+               ))}
            </div>
          ))}
        </div>
@@ -486,11 +544,12 @@ Mange applikationer henter data fra flere API kilder og kombinerer dem. Du lære
    ```
 
 2. **Tilføj komponenten til App.jsx:**
+
    ```jsx
-   import SimpleUserPosts from './components/SimpleUserPosts';
-   
+   import SimpleUserPosts from "./components/SimpleUserPosts";
+
    // I return delen:
-   <SimpleUserPosts />
+   <SimpleUserPosts />;
    ```
 
 ### Step 10.2: Observer datahentningen
@@ -504,18 +563,19 @@ Mange applikationer henter data fra flere API kilder og kombinerer dem. Du lære
 ### Step 10.3: Parallel datahentning
 
 1. **Opdater til parallel hentning med Promise.all:**
+
    ```jsx
    useEffect(() => {
      async function fetchData() {
-       console.log('🔄 Starter parallel datahentning...');
-       
+       console.log("🔄 Starter parallel datahentning...");
+
        try {
          // Hent begge datasæt samtidig
          const startTime = Date.now();
-         
+
          const [usersResponse, postsResponse] = await Promise.all([
-           fetch('https://jsonplaceholder.typicode.com/users'),
-           fetch('https://jsonplaceholder.typicode.com/posts')
+           fetch("https://jsonplaceholder.typicode.com/users"),
+           fetch("https://jsonplaceholder.typicode.com/posts")
          ]);
 
          const [usersData, postsData] = await Promise.all([
@@ -529,7 +589,7 @@ Mange applikationer henter data fra flere API kilder og kombinerer dem. Du lære
          setUsers(usersData.slice(0, 5));
          setPosts(postsData);
        } catch (error) {
-         console.error('❌ Fejl:', error);
+         console.error("❌ Fejl:", error);
        } finally {
          setLoading(false);
        }
@@ -544,6 +604,7 @@ Mange applikationer henter data fra flere API kilder og kombinerer dem. Du lære
 **Opgave:** Test både sequential og parallel datahentning og sammenlign tiderne i konsollen.
 
 **Spørgsmål:**
+
 1. Hvilken metode er hurtigst?
 2. Hvornår ville du bruge sequential vs parallel hentning?
 3. Hvad sker der hvis ét API call fejler i Promise.all?
@@ -558,48 +619,54 @@ Når du har data fra API'er vil du ofte filtrere og søge i dem. Dette er grundl
 ### Step 11.1: Simpel søgning i posts
 
 1. **Tilføj søgefunktion til PostList:**
+
    ```jsx
    function PostList() {
      const [posts, setPosts] = useState([]);
      const [loading, setLoading] = useState(true);
-     const [searchTerm, setSearchTerm] = useState('');
+     const [searchTerm, setSearchTerm] = useState("");
 
      // ... din fetch kode ...
 
      // Filtrér posts baseret på søgning
-     const filteredPosts = posts.filter(post =>
-       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-       post.body.toLowerCase().includes(searchTerm.toLowerCase())
+     const filteredPosts = posts.filter(
+       post =>
+         post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+         post.body.toLowerCase().includes(searchTerm.toLowerCase())
      );
 
      return (
        <div className="posts-section">
          <h2>Latest Posts</h2>
-         
+
          {/* Søgefelt */}
          <input
            type="text"
            placeholder="🔍 Søg i posts..."
            value={searchTerm}
-           onChange={(e) => setSearchTerm(e.target.value)}
+           onChange={e => setSearchTerm(e.target.value)}
            style={{
-             width: '100%',
-             padding: '10px',
-             marginBottom: '20px',
-             border: '1px solid #ccc',
-             borderRadius: '5px'
+             width: "100%",
+             padding: "10px",
+             marginBottom: "20px",
+             border: "1px solid #ccc",
+             borderRadius: "5px"
            }}
          />
 
          {loading && <p>⏳ Henter posts...</p>}
-         
+
          {!loading && (
            <>
-             <p>📊 Viser {filteredPosts.length} af {posts.length} posts</p>
+             <p>
+               📊 Viser {filteredPosts.length} af {posts.length} posts
+             </p>
              <ul className="posts-list">
                {filteredPosts.map(post => (
                  <li key={post.id} className="post-item">
-                   <h3>Post #{post.id}: {post.title}</h3>
+                   <h3>
+                     Post #{post.id}: {post.title}
+                   </h3>
                    <p>{post.body.substring(0, 100)}...</p>
                  </li>
                ))}
@@ -614,39 +681,43 @@ Når du har data fra API'er vil du ofte filtrere og søge i dem. Dette er grundl
 ### Step 11.2: Filtrering på bruger ID
 
 1. **Tilføj dropdown til at filtrere på user:**
+
    ```jsx
-   const [selectedUserId, setSelectedUserId] = useState('');
+   const [selectedUserId, setSelectedUserId] = useState("");
 
    // Kombiner filtreringer
    const filteredPosts = posts.filter(post => {
-     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          post.body.toLowerCase().includes(searchTerm.toLowerCase());
-     const matchesUser = selectedUserId === '' || post.userId.toString() === selectedUserId;
-     
+     const matchesSearch =
+       post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+       post.body.toLowerCase().includes(searchTerm.toLowerCase());
+     const matchesUser =
+       selectedUserId === "" || post.userId.toString() === selectedUserId;
+
      return matchesSearch && matchesUser;
    });
 
    // I return delen:
-   <div style={{ display: 'flex', gap: '10px', marginBottom: '20px' }}>
+   <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
      <input
        type="text"
        placeholder="🔍 Søg i posts..."
        value={searchTerm}
-       onChange={(e) => setSearchTerm(e.target.value)}
-       style={{ flex: 1, padding: '10px' }}
+       onChange={e => setSearchTerm(e.target.value)}
+       style={{ flex: 1, padding: "10px" }}
      />
-     
+
      <select
        value={selectedUserId}
-       onChange={(e) => setSelectedUserId(e.target.value)}
-       style={{ padding: '10px' }}
-     >
+       onChange={e => setSelectedUserId(e.target.value)}
+       style={{ padding: "10px" }}>
        <option value="">👥 Alle brugere</option>
-       {[1,2,3,4,5].map(id => (
-         <option key={id} value={id}>User {id}</option>
+       {[1, 2, 3, 4, 5].map(id => (
+         <option key={id} value={id}>
+           User {id}
+         </option>
        ))}
      </select>
-   </div>
+   </div>;
    ```
 
 **Refleksion:** Hvordan påvirker disse filtre din brugeroplevelse? Hvad sker der med performance når data mængden vokser?
@@ -656,12 +727,15 @@ Når du har data fra API'er vil du ofte filtrere og søge i dem. Dette er grundl
 ## 🎨 Bonus Opgaver (Valgfri)
 
 ### Bonus 1: Dark Mode Toggle
+
 Tilføj en knap der skifter mellem lys og mørk tema for din app.
 
 ### Bonus 2: Favorit Posts
+
 Lad brugere markere posts som favoritter og gem dem i localStorage.
 
 ### Bonus 3: Infinite Scroll
+
 Implementer lazy loading - hent flere posts når brugeren scroller ned.
 
 ---
