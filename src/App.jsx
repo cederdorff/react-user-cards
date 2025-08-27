@@ -30,6 +30,26 @@ function App() {
     }
   }, [users, loading]);
 
+  // Step 5.1c og 5.1d: handleSubmit-funktion
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const newUser = {
+      id: crypto.randomUUID(),
+      name: form.name.value,
+      mail: form.mail.value,
+      title: form.title.value,
+      image: form.image.value
+    };
+    setUsers([...users, newUser]);
+    form.reset();
+  }
+
+  // Step 5.3: Slet bruger funktion
+  function handleDeleteUser(id) {
+    setUsers(users.filter(user => user.id !== id));
+  }
+
   // Step 3.3: Vis loader mens data hentes
   if (loading) {
     return (
@@ -43,7 +63,23 @@ function App() {
     <div className="page">
       <Header />
       <AppInfo userCount={users.length} />
-      <UserList users={users} />
+
+      {/* Step 5.1b og 5.1d: Formular til at tilføje brugere */}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="name">Navn</label>
+        <input name="name" placeholder="Navn" required />
+        <label htmlFor="mail">Mail</label>
+        <input name="mail" placeholder="Mail" required />
+        <label htmlFor="title">Title</label>
+        <input name="title" placeholder="Titel" required />
+        <label htmlFor="image">Billed-URL</label>
+        <input name="image" placeholder="Billede-URL" required />
+        <div className="btns">
+          <button type="submit">Tilføj bruger</button>
+        </div>
+      </form>
+
+      <UserList users={users} onDelete={handleDeleteUser} />
       <Footer />
     </div>
   );

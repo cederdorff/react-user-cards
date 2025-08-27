@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function UserCard({ user }) {
+function UserCard({ user, onDelete }) {
   const [likes, setLikes] = useState(0);
   const [showDetails, setShowDetails] = useState(false);
 
@@ -40,6 +40,8 @@ function UserCard({ user }) {
         <button onClick={handleToggleDetails}>
           {showDetails ? "Skjul detaljer" : "Vis detaljer"}
         </button>
+        {/* Step 5.3: Slet bruger knap */}
+        <button onClick={() => onDelete(user.id)}>Slet</button>
       </div>
       {showDetails && (
         <div className="details">
