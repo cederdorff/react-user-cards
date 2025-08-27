@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import User from "./components/User";
+import Header from "./components/Header";
+import UserList from "./components/UserList";
+import Footer from "./components/Footer";
+import AppInfo from "./components/AppInfo";
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -38,12 +41,10 @@ function App() {
 
   return (
     <div className="page">
-      <h1>Users</h1>
-      <section className="grid">
-        {users.map(user => (
-          <User key={user.id} user={user} />
-        ))}
-      </section>
+      <Header />
+      <AppInfo userCount={users.length} />
+      <UserList users={users} />
+      <Footer />
     </div>
   );
 }
