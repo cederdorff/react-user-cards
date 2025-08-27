@@ -28,24 +28,42 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      # Download source code fra repository
       - name: Checkout
         uses: actions/checkout@v4
+
+      # Installer Node.js med npm caching for hurtigere builds
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "npm"
+
+      # Installer afhængigheder baseret på package-lock.json (hurtigere end npm install)
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      # Byg React appen til produktion (opretter dist/ folder)
       - name: Build
-        run: npm run build && cp ./dist/index.html ./dist/404.html
+        run: npm run build
+
+      # Kopier index.html til 404.html for at understøtte SPA routing
+      # Dette sikrer at React Router fungerer korrekt på GitHub Pages
+      - name: Copy index.html to 404.html for SPA routing
+        run: cp ./dist/index.html ./dist/404.html
+
+      # Konfigurer GitHub Pages deployment
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
+      # Upload bygget React app som artifact til GitHub Pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload dist repository
+          # Upload dist repository (hvor React build output ligger)
           path: "./dist"
+
+      # Deploy til GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
