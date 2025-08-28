@@ -6,7 +6,9 @@ function App() {
 
   useEffect(() => {
     async function fetchUsers() {
-      const response = await fetch("https://raw.githubusercontent.com/cederdorff/race/master/data/users.json");
+      const response = await fetch(
+        "https://raw.githubusercontent.com/cederdorff/race/master/data/users.json"
+      );
       const data = await response.json();
 
       setUsers(data);
@@ -16,10 +18,15 @@ function App() {
 
   return (
     <div className="page">
-      <h1>Users</h1>
+      <h1>User App</h1>
       <section className="grid">
         {users.map(user => (
-          <User key={user.id} name={user.name} mail={user.mail} image={user.image} />
+          <User
+            key={user.id}
+            name={user.name}
+            mail={user.mail}
+            image={user.image}
+          />
         ))}
       </section>
     </div>
